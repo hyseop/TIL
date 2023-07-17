@@ -1,0 +1,513 @@
+JavaScript
+
+CHAP9 자바스크립트 기본 문법
+
+- JS는 문자열 내에 큰 따옴표를 자주 넣으므로 작은 따옴표 사용 권장, 큰 따옴표도 사용 가능
+
+- 기본 용어
+- - 표현식: 값을 만들어 내는 코드, [표현식]
+- - 문장: 실행 코드 최소 단위, 종결시 ;, [문장;]
+- - 키워드: break, else, instanceof, true, false, case, new, try, catch, finally, null, typeof, continue, for, return, var, default, function, switch, void, delete, if, this, while, do, in, throw, with, const, class
+- - 식별자: 변수 및 함수 등의 이름, 키워드/숫자시작/공백/_와$제외특수문자 불가, 생성자 함수 이름은 대문자로 시작, 변수/인스턴스/함수/메소드는 소문자로 시작, 여러단어 카멜식 표기, 
+- - - 식별자 구분
+- - - - 변수: 식별자 뒤 괄호X + 단독, [input]
+- - - - 속성: 식별자 뒤 괄호X + 다른 식별자, [Array.length] // 객체 개별 값, 프로퍼티
+- - - - 함수: 괄호 + 단독, [alert('hi')]
+- - - - 메소드: 괄호 + 다른 식별자, [Math.abs(-123)] // 함수 속성
+- 출력: alert()
+
+- 자료형과 변수
+- - 숫자: 정수 실수 구분X
+- - 문자열: 문자 집합, '/" 연결시 +
+- - 이스케이프 문자: \t, \n, \\, \', \"
+- - 변수: 값 저장 시 사용하는 식별자
+- - - 변수 선언: [선언자 변수명;]
+- - - 변수 값 할당: [변수명 = 값;]
+- - - 변수 선언 및 초기화: [선언자 변수명 = 값;]
+
+- 조건문과 반복문
+
+- 배열: [선언자 배열명 = ['요소1', '요소2', ...];], 요소 내 다양한 자료형 가능
+- - 배열 요소 변경: [배열명[인덱스] = '변경요소명';]
+
+- 함수: 코드 집합, 함수도 변수이므로 마지막 입력 값이 저장됨(우선 순위), 선언적함수가 익명함수보다 우선 순위가 높음
+- - 익명 함수: [function () {}]
+- - - 익명 함수 선언: [... <script> / 선언자 함수명 = function () {...}; / </script> ...]
+- - 선언적 함수: [function 함수명() {}]
+- - - 선언적 함수 선언: [function 함수명() {...};]
+- - 매개변수와 반환 값
+- - - 매개변수: 괄호 안 함수에 추가 정보 전달, [함수('매개변수');]
+- - - 반환 값: 실행 결과 리턴, [function 함수이름('매개변수1', '매개변수2', ...) {함수코드... / return 반환값;}]
+- - 콜백 함수: 매개변수로 전달되는 함수, 주로 익명 함수 사용
+
+- 객체: 여러개의 다양한 자료형 저장, 요소 접근 시 키 기반(배열은 인덱스), [... <script> / 선언자 객체명 = {키1: '속성1', 키2: '속성2', ...} </script> ...]
+- - 속성: 객체 개별 값, 프로퍼티 // 배열의 요소
+- - - 속성 접근: [객체명['속성']] / [객체명.속성], 식별자 규칙 어긋난 키값 사용시 전자(대괄호) 사용
+- - - - 속성 순환 접근: [for 선언자 키 in 객체명 {...}]
+- - 메소드: 함수 속성
+
+CHAP10 문서 객체 모델
+
+- 기본 용어
+- - 문서 객체: HTML 태그를 자바스크립트 사용 객체로 만든 것 // HTML의 요소와 같음
+- - - 문서 객체 조작: 동적 조작, HTML 태그 조작과 비슷(정적 조작)
+- - - - 동적 조작: 웹 페이지 실행 도중 자바스크립트를 사용해 문서 객체 조작
+- - - - 정적 조작: 웹 페이지 실행 시 HTML 태그 문서 객체 조작
+- - - 문서 객체 모델: DOM, Document Object Model, 웹 브라우저가 HTML 파일을 분석하고 출력하는 방식
+
+- 웹 페이지 실행 순서: 위에서 부터, 생성 순서에 의해 아직 생성되지 않은 태그 조작시 오류 대처는 위치를 옮기거나 이벤트 활용
+
+- 문서 객체 선택: 기 존재 HTML 태그를 자바스크립트에서 문서 객체로 변환하는 것
+- - 문서 객체 선택 메소드: [... <script> / window.onload = function () {선언자 객체명 = document.getElementById('id속성')/querySelector('선택자');} / </script> ...]
+- - - document.getElementById('아이디'): 아이디로 1개 선택 // 스타일시트 사용시에는 id 속성이 중복되어도 문제가 없지만 자바스크립트에서는 문제가 생김
+- - - document.querySelector('선택자'): 선택자로 1개 선택
+- - - document.getElementsByName('이름'): name 속성으로 여러 개 선택
+- - - document.getElementsByClassName('클래스'): class 속성으로 여러 개 선택
+- - - document.querySelectorAll('선택자'): 선택자로 여러 개 선택
+
+- 문서 객체 조작
+- - 글자 조작: 글자 속성 사용
+- - - 글자 속성
+- - - - textContent: 문서 객체 내부 글자를 순수 텍스트 형식으로 가져오도록 변경
+- - - - innerHTML: 문서 객체 내부 글자의 HTML 태그를 반영해 가져오도록 변경
+- - 스타일 조작: 스타일(CSS) 속성 사용 // JS는 특수문자 -를 식별자에 사용할 수 없으므로 background-color
+- - - 스타일 속성
+- - - - background-image/backgroudImage
+- - - - background-color/backgroundColor
+- - - - box-sizing/boxSizing
+- - - - list-style/listStyle
+- - 속성 조작
+- - - 속성 조작 메소드: [... <script> / window.onload = function () {document.body.setAttribute('속성이름', '속성값); / 선언자 객체명 = document.body.getAttribute('속성이름'); ...}; / </script> ...] // body태그 속성 조작
+- - - - setAttribute('속성이름', '속성값'): 속성 지정
+- - - - getAttribute('속성이름'): 속성 추출
+
+- 이벤트: 현상 + 프로그램에 영향
+- - 이벤트 속성/처리기: 이벤트 발생 시 실행되는 함수, on이름, onload/onclick/onfoucs/onmouseup/...
+- - 이벤트 이름/타입: 속성의 on을 제외한 나머지
+- - 이벤트 리스터/핸들러: 속성 내 함수
+- - 이벤트 연결
+- - - 이벤트 모델: 문서 객체에 이벤트 연결하는 방식
+- - - - DOM 레벨 0: 쉬움, 중복 연결 불가능 // jQuery로 극복
+- - - - - 인라인 이벤트 모델: HTML 태그 내부에 JS코드 넣어 연결, [... <body> / <태그 이벤트속성="...">태그명</태그> / </body> ...]
+- - - - - - scirpt 태그 인라인 이벤트 모델: [... <script> / function 함수명(...) {} / </script> ... <body> / <태그 이벤트속성="...">태그명</태그> / </body> ...] // 인라인 코드 내부 여러 문장 사용시 지저분하여 script 태그 내부 함수 선언
+- - - - - 고전 이벤트 모델: 문서 객체 조작 방식, [... <script> / window.onload = function () {선언자 객체명 = document.getElementById('속성'); / 객체명.이벤트 = function () {...};}; / </script> ...] 
+- - - - DOM 레벨 2: 중복 연결 가능, 브라우저 종류에 따라 연결 방식이 다른 문제 // jQuery로 극복
+- - 이벤트 사용: 이벤트 객체를 사용하면 이벤트와 관련한 정보를 알아낼 수 있음, [... <script> / window.onload = function(이벤트객체) {...}; / </script> ...]
+- - - 기본 이벤트: 특정 태그의 디폴트 이벤트
+- - - - 기본 이벤트 제거: 유효성 검사, 주로 a/form 태그에 사용, 반환 값 false 지정 [... <script> / window.onload = function () {선언자 객체명 = document.getElementById('속성'); / 객체명.이벤트 = function () {return false;};}; / </script> ...] 
+
+CHAP11 jQuery 라이브러리
+
+- jQuery 라이브러리: 문서 객체 여러 개 한 번에 선택, 여러 개 선택 후 속성 추출 시 첫 번째 문서 객체 속성 추출
+
+- 문서 객체 선택: [$(선택자).메소드('속성이름', '속성값');]
+- - window.jQuery = window.$ = jQuery;
+
+- 문서 객체 조작
+- - 속성 조작
+- - - attr(): 속성 추출, [... <script> / $(document).ready(function () {선언자 객체명 = $(선택자).attr('속성이름'); ...}); / </script> ...] 
+- - - 속성 지정
+- - - - 속성 값 입력: [... <script> / $(document).ready(function () {$(선택자).attr('속성이름1', '속성값1'); $(선택자).attr('속성이름2', '속성값2'); ...}); / </script> ...] 
+- - - - 객체 입력: [... <script> / $(document).ready(function () {$(선택자).attr({속성이름1: '속성값1', 속성이름2: '속성값2' ...});}); / </script> ...] 
+- - - - 함수 이용: [... <script> / $(document).ready(function () {$(선택자).attr({속성이름1: '속성값1', 속성이름2: function () {... 속성값2코드...}});}); / </script> ...] 
+- - 스타일 조작: 하이픈이 들어가는 스타일 속성은 카멜표기(하이픈표기도 가능)
+- - - css()
+- - - - 속성 값 입력: [... <script> / $(document).ready(function () {$(선택자).css('속성이름1', '속성값1'); $(선택자).css('속성이름2', '속성값2'); ...}); / </script> ...] 
+- - - - 객체 입력: [... <script> / $(document).ready(function () {$(선택자).css({속성이름1: '속성값1', 속성이름2: '속성값2' ...});}); / </script> ...]
+- - - - 함수 이용: [... <script> / $(document).ready(function () {$(선택자).css({속성이름1: '속성값1', 속성이름2: function () {... 속성값2코드...}});}); / </script> ...] 
+- - 글자 조작
+- - - text()
+- - - html()
+- - 클래스 조작
+- - - addClass()
+- - - removeClass()
+- - - toggleClass(): 전환
+
+- 이벤트
+- - 이벤트 연결
+- - - 간단한 이벤트 연결: [$(선택자).메소드(function (이벤트) {});]
+- - - - 간단한 이벤트 연결 메소드: ready, blur, focus, focusin, focusout, load, resize, scroll, unload, click, dbclick, mouseup, mousedown, mousemove, mouseover, mouseout, mouseenter, mouseleave, change, select, submit, keydown, keypress, keyup, error, ...
+- - - - hover(): 매개변수 1에 mouseenter 이벤트 리스너와 매개변수 2에 mouseleave 이벤트 리스너, [... $(선택자).hover(function () {$(this).css({...});}, function () {$(this).css({...});}); ...]
+- - 이벤트 사용
+- - - on(): 이벤트 연결, [$(선택자.on(이벤트명, 이벤트핸들러);] / [$(선택자.on({이벤트명1: 이벤트핸들러1, 이벤트명2: 이벤트핸들러2, ...});]
+- - - off(): 이벤트 제거
+- - - preventDefault(): 기본 이벤트 제거
+
+- 시각 효과
+- - 시각 효과 메소드
+- - - show(속도): 문서 객체 커지며 표시
+- - - hide(): 작아지며 사라짐
+- - - toggle(): show()와 hide() 반복
+- - - slideDown(): 슬라이드로 표시
+- - - slideUp(): 슬라이드로 사라짐
+- - - slideToggle(): slideDown()과 slideUp() 반복
+- - - fadeIn(): 선명해지며 표시
+- - - fadeOut(): 흐려지며 사라짐
+- - - fadeToggle(): fadeIn()과 fadeOut() 반복
+- - 애니메이션 효과
+- - - ...
+
+CHAP12 자바스크립트와 jQuery 라이브러리 응용
+
+- ...
+
+
+
+JavaScript Advanced
+
+CHAP3 변수와 값
+
+- 변수
+- - 변수 선언: [선언자 변수이름「, 변수이름2, ...」;], 중복 선언 가능, 끌어올림(hoisting)
+- - - 선언자: var, let, const // javascript는 변수 타입이 없음
+- - - - var: 전역 및 함수 범위, 블록 외 읽을 시 undefined, 업데이트(값 수정, 재할당) 가능, 재선언 및 중복선언 가능, 초기화없이 선언 가능
+- - - - let: 블록 범위, 블록 외 읽을 시 참조 오류, 업데이트 가능, 재선언 및 중복선언 불가능, 초기화없이 선언 가능
+- - - - const: 블록 범위, 블록 외 읽을 시 참조 오류, 업데이트 불가능, 재선언 및 중복선언 불가능, 초기화없이 선언 불가능 / / 상수 선언, 상수 값이 객체나 배열일 경우 업데이트 가능
+- - 변수 대입: [변수이름 = 값「, 변수이름2 = 값2, ...」;], 선언없이 값 대입 시 전역 변수로 자동 선언, 끌어올림X
+- - - 변수 선언과 대입: [선언자 변수이름 = 값「, 변수이름2 = 값2, ...」;], 끌어올림X
+- - 변수 명명 규칙: 알파벳, 숫자(첫글자X), 언더바, 달러, // 예약어X
+- - - 예약어: break, case, catch, class, const, continue, debugge, default, delete, do, else, export, extends, false, finally, for, function, if, import, in, instanceof, new, null, return, super, switch, this, throw, true, try, typeof, var, void, while, with, yield / (es6 추가예정) await, enum, implements, package, protected, interface, private, public / (기정의, 오류X, 비권장) arguments, Array, Boolean, Date, decodeURI, decodeURIComponent, encodeURI, encodeURIComponent, Error, eval, EvalError, Function, Infinity, isFinite, isNaN, JSON, Math, NaN, Number, Object, parseFloat, parseInt, RangeError, RefferenceError, RegExp, String, SyntaxError, TypeError, undefined, URIError
+
+- 데이터 타입: 동적 타입 언어
+- - 데이터 타입 종류: 원시, 객체
+- - - 원시 타입: 숫자, 문자열, 논리값, 특수값(undefined, null), 심벌
+- - - - Symbol(): 자신을 제외한 어떤 값과도 다른 유일무이한 값, 호출마다 새로운 값, [선언자 변수이름 = Symbol("주석");]
+- - - - - Symbol.keyFor(): [선언자 변수이름 = Symbol("키값");], 
+- - - 객체 타입: 여러 변수 모인 복합 데이터
+- - 이스케이프 시퀀스: \0(null), \b(백스페이스), \t(수평탭), \n(개행), \v(수직탭), \f(다음페이지), \r(캐리지리턴), \', \", \\, ...
+- - - 템플릿 리터럴: [선언자 변수이름 = `...`;], 이스케이프 시퀀스없이 줄바꿈 가능, 이스케이프 시퀀스 사용 시 리터럴 앞에 String.raw(태그 함수), [선언자 변수이름 = String.raw`...`;]
+- - - - 보간 표현식: 템플릿 리터럴 안 플레이스 홀더, [... = `... ${...} ...`;]
+- - - - - 플레이스 홀더: 표현식 간주하여 평가
+
+CHAP4 객체와 배열, 함수의 기초
+
+- 객체 기초, 객체 리터럴
+- - 객체: 여러개의 프로퍼티, 복합 데이터, 연관배열, 사전, 참조 타입,
+- - - 프로퍼티: 이름(키)과 값 쌍, 자바의 멤버변수
+- - (92)객체 리터럴로 객체 생성하기: [선언자 변수명 = {"프로퍼티명": "프로퍼티값", ...}(객체리터럴);], 객체를 변수로 취급, 리터럴 안 공백 시 빈 객체로 생성, // ', " 둘 다 가능
+// var card = {suit: "하트", rank:"A"}
+- - - 프로퍼티 값 읽기/쓰기: [변수명.프로퍼티명] / [변수명["프로퍼티명"]]
+- - - 프로퍼티 추가: [변수명.추가프로퍼티명 = 프로퍼티값;]
+- - - 프로퍼티 삭제: [delete 변수명.프로퍼티명;]
+- - - 프로퍼티 수정: [변수명.프로퍼티명 = 수정프로퍼티값;]
+- - - 프로퍼티 포함 여부: [document.write("프로퍼티명" in 변수명);]
+- - - - 지정 스트링 포함된 모든 프로퍼티 변수 출력: [for(프로퍼티명내스트링 in 변수명) {document.write(변수명[스트링]);}]
+- - 메소드: 프로퍼티 저장 값 타입이 함수
+
+- 함수 기초
+- - 함수: 일련의 처리(기능 구현) 문장 집합, 선언 끌어올림, 참조 및 값에 의한 호출 가능, 변수 취급
+- - - 정의(선언): [function 함수명(인수) {return 작업;}]
+- - - 호출: [함수명(인수);]
+- - - 인수(매개변수): 인수 없어도 됨, 타입 지정 불필요, 다수 가능
+- - - 변수 유효 범위: 어휘적 범위(프로그램 구문으로 정함) // 동적 범위: 프로그램 실행 중에 유효 범위 정함
+- - - 전역 변수: 전역 끌어올림
+- - - 지역 변수: 지역 내 끌어올림
+- - - 함수 내 변수 선언 생략 시 전역 변수로 취급
+*- - - 함수 리터럴: [function 「함수명」(인수) {return 작업;};], 익명/무명 함수, 함수 내 유효한 함수 이름(함수 내부의 함수), 끌어올림X // 객체 내부 메소드는 리터럴 함수, 리터럴 함수는 함수 외부에서도 사용 가능
+*- - - 객체의 메소드: 함수 객체의 참조 값을 담고 있는 프로퍼티(메소드 정의 시 프로퍼티 값으로 함수 리터럴)
+
+- 객체 기초, 생성자
+- - (112)생성자로 객체 생성하기: [function 함수명(인수(프로퍼티명)1, 인수2, ...) {this.인수1=인수1; / this.인수2=인수2; / ...} / 선언자 변수명 = new 함수명("프로퍼티값1", "프로퍼티값2", ...);], 
+// function Card(suit, rank) {this.suit=suit; this.rank=rank;} / var card = new Card("하트", "A");
+- - - 생성자: [function 함수명(인수(프로퍼티명)1, 인수2, ...) {this.인수1=인수1; / this.인수2=인수2; / ...}], 객체 생성 및 초기화, this는 생성될 객체(객체 생성 시의 인수, 프로퍼티값)
+- - - 객체 생성: [선언자 변수명 = new 함수명("프로퍼티값1", "프로퍼티값2", ...);], 생성자 호출
+
+- 객체 기초, 내장 객체
+- - 네이티브 객체
+- - - 내장 생성자 객체: : Object, String, Number, Boolean, Array, Date, Function, RegExp, Error, EvalError, InternalError, RangeError, ReferenceError, SyntaxError, TypeError, URIError, +(es6) Symbol, Int8Array8, Uint8Array8, Int16Array16, Uint16Array16, Int32Array32, Uint32Array32, Float32Array32, Float64Array64, ArrayBuffer, DataView, Promise, Generator, GeneratorFunction, Proxy, Map, Set, WeakMap, WeakSet, ...
+- - - - Date 생성자: .getFullYear(), .getMont(), .getDate(), .getDay(), .getHours(), .getMinutes(), .getSeconds(), .getMilliseconds(), .toString(), .toLocaleString(), .toLocaleDateString(), .toLocaleTimeString(), .getUTCHours(), .toUTCString()
+- - - 기타 객체: JSON, Math, Reflect, ...
+- - 호스트 객체
+- - - 브라우저 객체: Window, Navigator, Document, Location, ...
+- - - DOM 객체: HTML 요소 조작 객체
+- - - 기타 객체: XMLHttpRequest, HTML5 각종 API, ...
+- - 사용자 정의 객체
+
+- 배열 기초
+- - 배열 리터럴로 생성하기: [선언자 배열명 = [값1, 값2, 값3, ...];], 배열은 객체이므로 참조 값, 요소없을 시 빈 배열 생성, 일부 요소 값 생략 가능(->undefined, 희소배열), 요소에는 다양한 타입 가능, 각 요소는 하나의 변수로 사용 가능, 요소 번호로 문자열("1/2/...") 사용 가능
+- - - 배열 길이: length 프로퍼티, 개수와 다름, 배열명.length() 시 요소 개수보다 작으면 요소 삭제됨
+- - Array 생성자로 생성하기: [선언자 배열명 = new Array(값1, 값2, 값3, ...);] / [선언자 배열명 = new Array(길이);]
+- - - 배열 길이: 개수
+- - 배열 요소 추가: 없는 요소에 값 대입, push()(끝에 값 추가), unshfit()(앞에 값 추가)
+- - 배열 요소 삭제: delete(), shift()(첫 번째 요소 삭제), pop()(마지막 요소 삭제) length 프로퍼티는 변하지 않음(빈 공간) // 희소배열
+- - - 배열 요소 확인: 객체 프로퍼티 확인, [for (선언자 변수 in 배열명) console.log(변수);] / [배열명.hasOwnProperty();] / [배열명.forEach(function(data, index){document.write(data + index);});]
+- - - join(): [배열명.join( /''/'-'/...);], 아무것도 안쓸 시 쉼표로 구분, '' 안에 구분자 입력
+
+CHAP5 표현식과 연산자
+
+- 표현식: 어떤 값으로 평가되는 것(식 계산), 숫자/문자열/논리값 등 원시값과 변수/프로퍼티/배열요소/함수호출 등
+- 연산자: 오퍼레이터
+- - ==: 값 비교
+- - ===: 값과 타입 비교
+
+- 산술 연산: 정수/실수 구분 X
+- - 산술 대입 연산자
+- - Math 객체 프로퍼티: Math.E, Math.LN2, Math.LN10, Math.LOG2E, Math.LOG10E, Math.PI, Math.SQRT1_2, Math.SQRT2
+- - Math 객체 메소드: Math.abs(x), Math.acos(x), ... , Math.cbrt(x), Math.ceil(x), ... , Math.exp(x), Math.floor(x), Math.fround, ... , Math.random(), ...
+
+- 문자열 제어
+- - 문자열 연결: +
+- - 문자열 조작
+- - - String 객체 메소드: codePintAt(n), charAt(n), charCodeAt(n), concat([s1, s2, ...]), endWith/include(s [, n]), indexOf(s), lastIndexOf(s), localeCompare(s), match(r), normalize(form), repeat(n), replace(s1, s2), search(r), slice(m, n), split(s [, n]), statsWith(s [, n]), substring(m, n), toLocaleLowerCase(), toLocaleUpperCase(), toLowerCase(), toUpperCase(), toString(), trim(), valueOf()
+- - - - 문자열에서 String 객체 사용: 문자열은 객체가 아니므로 프로퍼티가 없으나 프로퍼티 사용 시 자동으로 String 객체로 변환됨, 원시 값 처리 시 String 객체로 변환하지 않고 메소드 바로 호출 // 제대로 출력하려면 객체 변환(생성)시 valueOf() 메소드 이용해야 함
+- - - 래퍼 객체: 원시 값 처리 시 자동으로 래퍼 객체로 변환됨(null/undefined는 없음)
+- - - String 생성자 프로퍼티/메소드: String.length, String.fromCharCode(), String.fromCodePoint, String.prototype, String.raw() 
+
+- 논리 연산자와 관계 연산자
+
+- 비트 연산
+
+- 기타 연산
+
+- 명시적 타입 변환
+- - 숫자를 문자열로 변환
+- - - 숫자 + 문자열
+- - - Number 객체 메소드: toString, toLocaleString, toFixed, toExponential, toPrecision
+- - - String()
+- - 문자열을 숫자로 변환
+- - - "", +숫자
+- - - parseInt/Float()
+- - - Number()
+
+CHAP6 웹 브라우저에서의 입출력
+
+- 대화상자 표시하기
+- - 대화상자: Window (전역) 객체
+- - - Window 객체 메소드: 「window.」alert, promt, confirm
+- - - - alert: 경고 대화상자
+- - - - prompt: 사용자 문자열 입력 받는 대화상자, [선언자 변수명 = prompt("메시지"「, "초기입력값"」);]
+- - - - confirm: 확인/취소 버튼 대화상자
+
+- Console
+- - Console 객체 메소드
+- - - 「window.」console.dir: 객체 대화형 목록 출력(객체 프로퍼티 나열, 펼침(세로)형태)
+- - - console.error
+- - - console.info: 메시지 타입 로그 출력
+- - - console.log: 일반 로그 출력, 텍스트 출력
+- - - - ,: [console.log( , , , ...);], 쉼표 단위 공백 
+- - - - +: [console.log( + + + ...);], 공백없음
+- - - console.time: 처리 시간 측정용 타이머 시작
+- - - console.timeEnd: 타이머 정지 후 재시작 후 흐른 시간 밀리초 단위 출력
+- - - console.trace: 스택 트레이스 출력
+- - - console.warn
+
+- 이벤트 처리기와 타이머
+- - 이벤트 처리기: 이벤트 발생 시 실행되는 함수, onclick, ondblclick, onmousedown, onmouseup, onmousemove, onmouseout, onmouseover, onkeydown, onkeypress, onkeyup, onkeychange, onblur, onfocus, onselect, onsubmit, onload, onunloadWeb, onabort, onerror, onresize
+- - - HTML 요소 속성으로 등록: [... <head> ... <script> / fucntion 함수명() {...} / </script> / </head> / <body> / <input type="..." value="..." 이벤트처리기명="..."> </body> ...]
+*- - - DOM 요소 프로퍼티로 등록: [... <head> ... <script> / function 함수명() {...} / window.onload = function() {선언자 이벤트처리기명 = document.getElementById("이벤트처리기명"); / 이벤트처리기명.이벤트처리기 = 함수명;}; / </script> / </head> / <body> /  <input type="..." value="..." 이벤트처리기명="..."> </body> ...] 
+- - - - DOM: Document Object Model, 프로그램의 HTML 요소 조작 인터페이스
+- - - - - DOM 주요 객체: window, document, 요소 객체
+- - - - 자바스크립트 프로그램 작성법: 코드는 head에, window.onload에 등록한 함수는 초기 설정 작업, window.onload=function(){...}를 제외한 코드는 이벤트 처리기 함수와 그 안의 다양한 함수 정의 및 전역 변수 선언
+- - - addEventListener 메소드 사용: [DOM노드.addEventListener(타입("click"/"mouseup"/...), 함수, true/false);]
+- - - 이벤트 처리기 제거: [이벤트처리기명.이벤트처리기 = null;] 
+- - 타이머
+- - - setTimeout(): 지정 시간 후 함수 실행: [setTimeout(funciton() {...}, 시간);] 
+- - - setInterval(): 지정 시간 반복 실행: [setInterval(function() {...}, 시간);] 
+- - - - clearInterval(): 인터벌 해제
+
+- HTML 요소를 동적으로 읽고 쓰기
+- - innerHTML: [document.getElementById("...").innerHTML="..."]
+- - 폼 컨트롤 입력 값 읽기
+- - - (요소/속성/프로퍼티: 설명)
+- - - input/number, text.../value: 입력 값 문자열로 반환
+- - - input/checkbox, radio/checked: 항복 선택 여부 논리 값
+- - - select/-/selectedIndex: 선택 옵션 요소 번호(0부터)
+- - - textarea/-/value: 입력된 문자열
+- - document.write: 이벤트 처리기로 등록한 함수 안에서 사용 X(HTML 문서 동적 수정 불가능) 
+
+- Canvas를 활용한 컴퓨터 그래픽
+- - Canvas 특징: 저수준(기본 기능, 복잡한 그림용) API, 즉시 실행형(상태 저장 중간 데이터 계층 없음)
+- - Canvs 기본 사용법: [... <head> ... <script> window.onload = function() {*} </script> / </head> / <body> / <canvas id="..." width="..." height="..."></canvas> / </body> ...], width/height 생략 시 300/150, DOM 사용해 width/height 프로퍼티로 설정 가능(설정 시 Canvas 초기화)
+- - 189
+
+CHAP7 제어 구문
+
+- - - for (배열내1개프로퍼티변수 in 배열(객체)) {...} // java: for (배열내1개변수 : 배열) {...}
+
+CHAP8 함수
+
+- 함수 정의
+- - 함수 선언문: [function 함수명(인수) {return 작업;}], 끌어올림(호출문보다 뒤에 있어도 호출 됨)
+- - 함수 리터럴: [선언자 함수명= function(인수) {return 작업;}], 참조를 변수에 할당한 후 호출 가능(호출 코드보다 앞에 있어야함)
+- - Function 생성자: [선언자 함수명 = new function("인수", "return 작업");], 참조를 변수에 할당한 후 호출 가능(호출 코드보다 앞에 있어야함) 
+- - 화살표 함수 표현식: [선언자 함수명 = 인수 => 작업;], 참조를 변수에 할당한 후 호출 가능(호출 코드보다 앞에 있어야함) 
+
+- 중첩 함수: 지역/내부함수, 외부 함수 최상위 레벨에만 중첩 가능(함수 안의 if/while문 등 안에 불가), 외부 함수 내에서만 사용 가능, 외부함수의 인수와 지역 변수에 접근 가능
+
+- 함수 호출
+- - 함수 호출: [선언자 변수 = 함수명(인수);]
+- - 메소드 호출: [변수.함수참조변수 = function() {...}; / 변수.함수참조변수();]
+- - 생성자 호출: [선언자 변수 = new 함수명();]
+- - call, apply 메소드 간접 호출: []
+
+- - 즉시 실행 함수: 익명 함수 정의 후 바로 실행, 그룹 연산자로 묶어 함수 정의식이 평가되어 함수 값(함수 객체 참조 값)으로 바뀜, [(function(「인수1, 인수2, ...」) {...})(「인수대입값1, 인수대입값2, ...」);] / [(function(「인수1, 인수2, ...」) {...}(「인수대입값1, 인수대입값2, ...」));] / [+function(「인수1, 인수2, ...」) {...}(「인수대입값1, 인수대입값2, ...」)]
+- - - 익명 함수: 할당 및 실행, [선언자 변수 = function(「인수1, 인수2, ...」) {...}; / 변수(「인수대입값1, 인수대입값2, ...」);]
+
+- 함수 인수
+- - 인수 생략: 정의식 인자 개수 > 인수, 생략 인자는 undefined
+- - - 호출 시 인수 생략 가능한 함수 정의: 정의식에서 인수 생략시 사용할 초기값 설정, [function 함수명(인수1, 인수2) {인수2 = 인수2 || 초기값; return 식;} / 함수명(인수1);]
+- - 가변 길이 인수 목록(Arguments 객체)
+- - - Arguments 객체: 유사 배열 객체, arguments[i] 변경 시 인자도 함께 변경됨, 배열 객체로 변환 [선언자 변수 = [].slice.call(arguments);]
+- - - - arguments 변수: 모든 함수에서 사용할 수 있는 지역 변수
+- - - - 프로퍼티
+- - - - - argument.length
+- - - - - arguments.callee: 현재 실행되는 함수 참조
+
+- 재귀 함수
+- - 재귀함수: 265
+
+- 프로그램 평가 및 실행 과정
+- - 
+
+- 클로저
+- - 
+
+- 이름 공간
+- - 
+
+- 객체로서의 함수
+- - 
+
+- 고차 함수
+- - 
+
+- 콜백 함수
+- - 
+
+- ES6 추가 함수 기능
+- - 
+
+CHAP9 객체
+
+- 객체 생성
+- - 
+
+- 프로토타입 상속
+- - 
+
+- 접근자 프로퍼티
+- - 
+
+- 프로퍼티 속성
+- - 
+
+- 프로퍼티 존재 확인
+- - 
+
+- 프로퍼티 열거
+- - 
+
+- 객체 잠그기
+- - 
+
+- Mixin
+- - 
+
+- JSON
+- - 
+
+- ES6 추가 객체 기능
+- - 
+
+CHAP10 배열
+
+- 배열 메소드: 배열은 Array 타입 객체, Array.prototype 프로퍼티 상속
+- - 수정 메소드
+- - - copyWithin(target, begin, end): begin ~ end-1 요소 target에 복사, ES6
+- - - fill(target, begin, end): begin ~ end-1 요소 target으로 대체, ES6
+- - - pop(): 마지막 요소 잘라내 반환
+- - - push(data): 끝에 data값 요소로 추가, 반환값은 길이
+- - - reverse(): 역순 정렬
+- - - shift(): 첫 요소 잘라낸 후 모든 요소 왼쪽으로 이동, 반환값은 삭제된 요소
+- - - sort([callback]): callback에 따라 정렬
+- - - splice(index, howmany [, data ...]): index부터 howmany개 요소를 data로 대체, index만 넘기면 인덱스+1 이후 모든 요소 삭제, 음수면 음수 + 배열길이 이후 모든 요소 삭제
+- - - unshift(data1 [, data2, ...]): 인수로 지정한 데이터를 배열 시작 부분에 추가, 반환값은 길이
+- - 접근자 메소드: 기존 배열 영향없고, 수정한 새 배열 반환
+- - - join() 
+*396
+- - - concat(array): 지정 배열 대상 배열에 연결
+- - - indexOf(data, index): data와 같은 첫 번째 요소 키 index부터 검색
+- - - join(string): 요소를 string으로 연결한 문자열 반환
+- - - lastIndexOf(data, index): data와 같은 마지막 요소 키 index부터 검색
+- - - slice(begin [, end]): begin ~ end-1 사이 요소 제거
+- - - toLocaleString(): 해당 지역 언어로 번역한 문자열로 변환한 뒤 쉼표로 연결
+- - - toString(): 문자열로 변환한 뒤 쉼표로 연결
+- - 반복 메소드
+- - - entries(): 요소 인덱스와 값이 요소로 들어있는 배열을 값으로 반환하는 이터레이터 반환, ES6
+- - - every(callback): 배열 요소가 callback 조건에 부합하는지 판정
+- - - filter(callback): callback 조건에 부합하는 요소만 담은 새로운 배열 생성
+- - - find(callback [, thisArg): callback 조건에 부합하는 첫 번째 요소 반환, ES6
+- - - findIndex(callback [, thisArg): callback 조건에 부합하는 첫 번째 요소 인덱스 반환, ES6
+- - - forEach(callback [, thisArg): callback 사용해 차례대로 처리
+- - - keys(): 인덱스를 값으로 가지는 이터레이터 반환, ES6
+- - - map(callback [, thisArg): callback으로 처리한 결과물을 배열로 반환
+- - - reduce(callback [, initial): 이웃한 요소를 왼쪽부터 callback으로 처리하여 하나의 값으로 반환, initial은 초기값
+- - - reduceRight(callback [, initial): 이웃한 요소를 오른쪽부터 callback으로 처리하여 하나의 값으로 반환, initial은 초기값
+- - - some(callback [, thisArg): 요소 하나라도 callback 조건에 부합하는지 판단
+- - - values(): 데이터를 값으로 가지는 이터레이터 반환, ES6
+
+- 다차원 배열
+- - 
+
+- 유사 배열 객체
+- - 
+
+- ES6 추가 배열 기능
+- - 
+
+CHAP11 버그 및 오류
+
+CHAP12 정규 표현식
+
+CHAP13 웹 브라우저 객체
+
+CHAP14 문서 제어
+
+- DOM 트리: HTML 문서 내 요소와 텍스트 사이의 포함 관계를 표현
+- - 노드: DOM 트리 구성 객체 하나
+- - - 문서 노드: 전체 문서를 가리키는 Document 객체
+- - - - Document 객체: 모든 노드의 조상 노드, DOM 트리의 루트
+- - - HTML 요소 노드: HTML 요소 객체
+- - - 텍스트 노드: 텍스트 객체
+- - - 공백 노드
+- - - 노드 객체 프로퍼티
+- - - - parentNode: 부모 노드 참조, Document 객체 부모 노드는 null 계층 구조 정의
+- - - - childNodes: 자식 노드 참조를 저장한 유사 배열 객체(NodeList), 계층 구조 정의
+- - - - firstChild: 첫 자식 노드, 없을 시 null, 계층 구조 정의
+- - - - lastChild: 마지막 자식 노드, 없을 시 null, 계층 구조 정의
+- - - - nextSibling: 다음 형제 노드, 계층 구조 정의
+- - - - previousSibling: 이전 형제 노드, 계층 구조 정의
+- - - - nodeType: 노드 유형 뜻하는 숫자
+- - - - nodeValue: 텍스트 노드의 텍스트 콘텐츠, 요소 노드에서는 null
+- - - - nodeName: 요소 노드는 대문자로 바뀐 요소 이름, 텍스트 노드는 "#text"
+
+- 노드 객체 가져오기
+- - 
+
+- 속성 값의 읽기와 쓰기
+- - 
+
+- HTML 요소의 내용을 읽고 쓰기
+- - 
+
+- 노드 생성 삽입 삭제하기
+- - 
+
+- HTML 요소의 위치
+- - 
+
+- HTML 폼
+- - 
+
+- CSS 제어하기
+- - 
+
+CHAP15 이벤트 처리
+
+CHAP16
+CHAP17
+백엔드 후 돌아옴
+
+CHAP18 생성자와 클래스 구문
+
+CHAP19
