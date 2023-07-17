@@ -1,0 +1,181 @@
+MySQL
+
+- 주석처리: /**/, -- , #
+- *: 모든 것
+
+CHAP 6. SQL 기본
+
+- DML: DATA MANIPULATIUON LANGUAGE, 데이터 조작 언어, 트랜잭션(임시 조작, 원본 미변경) 발생, SELECT/INSERT/UPDATE/DELETE/DROP..., DROP을 제외한 나머지 롤백 가능
+- DDL: D DEFINITION L, 정의, CREATE/DROP/ALTER/...
+- DCL: D CONTRL L, 제어, GRANT/REVOKE/DENY/...
+
+6.1. SELECT 문
+
+- [SELECT 컬럼 FROM 테이블 WHERE 조건]
+- - DUAL 테이블: 출력 데이터 확인위한 임시 테이블
+- SHOW: 데이터베이스 조회, [SHOW 데이터베이스;]
+- USE: 사용할 데이터베이스 지정, [USE 데이터베이스;]
+- 컬럼 이름 별칭(Alias): 컬럼 이름 별도 지정 기능, [S ... 「AS」 「'/"」별칭「'/"」 ...] // 작은 따옴표 사용 권장
+- WHERE 절: 조건
+- 조건 연산자: =, <, >, <=, >=, <>, !=, ...
+- 관계 연산자: NOT, AND/&&, OR/||, ...
+- BETWEEN AND: 연속적 값(숫자, continuous)에만 사용 가능, [S 컬럼1, 컬럼2 F 테이블 W 컬럼1/2 BETWEEN A AND B;]
+- IN(): 비연속적 값(이산적인 값, discrete), [S 컬럼1, 컬럼2 F 테이블 W 컬럼1/2 = '조건1' OR 컬럼1/2 = '조건2' OR ...;] 혹은 [... W 컬럼1/2 IN ('조건1', '조건2', ...);]
+- LIKE: 문자열 내용 검색, [... W 컬럼 LIKE '「%(_)」조건「%(_)」';], %: 모두 포함, _: 개당 1글자 // 앞 쪽 사용 비권장
+- SUBQUERY(하위쿼리): 쿼리문 안의 쿼리문, [S ... F ... W (S ... F ... W ...)], ANY/ALL/SOME/...
+- - ANY(), SOME(): WHERE 절에서 두 개 이상의 값(OR) 반환
+- - - =ANY(): IN()
+- - ALL(): WHERE 절에서 두개 이상의 값(AND) 반환
+- ORDER BY: 순서 정렬 출력, 기본값은 ASCENDING, 내림 차순은 컬럼 뒤 DESCENDING, [S ... F ... ORDER BY ... DESC, ... ASC;], 정렬하는 컬럼이 꼭 SELECT 문의 컬럼일 필요는 없음, 사용 비권장, 절(S, F, W, GB, H, OB) 중 가장 뒤에 와야함
+- DISTINCT: 컬럼 중복 제거, 1개만 남김, [S DISTINCT ... F ...]
+- LIMIT: 출력 개수 제한, [S ... F ... OB ... LIMIT N;] 혹은 [LIMIT 0, 5;] 혹은 [LIMIT 5 OFFSET 0]
+- CREATE: [CREATE TABLE ... (S ... F ...)], 일부 컬럼도 가능, 제약 조건 복사 안됨
+- GROUP BY: [S 컬럼1, 집계함수(컬럼2) F 테이블 GROUP BY 컬럼1;]
+- - 집계함수: AVG(), MAX(), MIN(), COUNT(), COUNT(DISTINCT), STDEV(), VAR_SAMP()
+- HAVING: [... GB ... HAVING 집계함수(컬럼1*/+/-/...컬럼2) 조건;], GROUP BY 절에서 WHERE 대신 사용(집계함수용)
+- WITH ROLLUP: 소합계, [... GB ... WITH ROLLUP;]
+- NULL 처리 연산자: IS NULL / IS NOT NULL(SELECT 문, vs CREATE 문: NOT NULL)
+
+6.2. 데이터 변경
+
+- INSERT 문: [INSERT 「INTO」 테이블「컬럼1, 컬럼2, ...」 VALUES (값1, 값2, ...)], 테이블 뒤 컬럼 생략 가능하나 그 경우 VALUE 값 순서 및 개수가 테이블과 동일해야 하고 생략 시 NULL 값으로 지정
+- - 대량 샘플 데이터 생성: [INSERT 「INTO」 테이블 (컬럼1, 컬럼2, ...) SELECT ...;]
+- AUTO_INCREMENT(=초기값): 1(초기값)부터 증가하는 숫자 값, PRIMARY KEY 또는 UNIQUE로 지정, 지정된 컬럼은 INSERT 문에서 NULL로 지정, 정수형만 가능
+- - SELECT LAST_INSERT_ID(): 마지막 입력 값 확인
+- UPDATE: 수정, [UPDATE 테이블 SET 컬럼1=값1, 컬럼2=값2, ... 「WHERE 조건」;], WHERE 절 생략 시 전체 행 값이 변경됨
+- DELETE FROM: [DELETE FROM 테이블 「WHERE 조건」;], WHERE 절 생략 시 전체 데이터 삭제됨
+
+6.3. WITH절과 CTE
+
+- WITH 절: CTE 표현 구문
+- CTE: Common Table Expression, 뷰/파생테이블/임시테이블 대신 사용, 구문의 단순화, 
+- - 재귀적 CTE
+- - 비재귀적 CTE: [WITH CTE테이블명(컬럼1, 컬럼2, ...) AS (S 컬럼1, 컬럼2, ... F... ) SELECT ... FROM CTE테이블명;], 
+
+CHAP 7. SQL 고급
+
+7.1. 데이터 형식
+
+- 8BIT = 1BYTE
+- 테이블 및 컬럼명 규칙: ~64문자, 일반문자, _, $만 사용 가능, 숫자 시작 불가능, 예약어 불가능, 의무부여(권고)
+
+- 숫자 데이터
+- - 정수: TINYINT(1BYTE), SMALLINT(2), MEDIUMINT(3), INT(INTEGER)(4), BIGINT(8)
+- - 실수: FLOAT(4)(.7f), DOUBLE(REAL)(8)(.15d), DECIMAL(NUMERIC)(m(전체자리),[d(소수점아래자리)])(5~17)
+- 문자 데이터
+- - CHAR(N)(고정형)(1~255), VARCHAR(N)(가변형)(1~65535), LONGTEXT(~4GB), LONGBLOB(~4GB)
+- 날짜, 시간 데이터 타입: DATE(3)(YYYY-MM-DD), TIME(3)(HH:MM:SS), DATETIME(8)
+- SET @: 변수 선언, [SET @variable = variable value; SELECT @variable;], LIMIT에서 활용시 PREPARE와 EXECUTE 활용
+- CAST(): 명시적 형 변환, [S CAST(... AS 타입(길이));]
+- CONVERT():  명시적 형 변환, [S CONVERT(... , 타입(길이));]
+- 암시적 형 변환: [S A 연산자 B;], 문자와 문자는 정수 / 문자와 정수는 정수 / CONCAT(문자와 문자)는 문자 / CONCAT(문자와 정수)는 문자 / 0과 문자는 0
+- 제어 흐름 함수: [S 함수();]
+- - IF(수식, 참, 거짓)
+- - IFNULL(수식1, 수식2): 수식1이 NULL이면 수식2 반환
+- - NULLIF(수식1, 수식2): 수식1과 2가 같으면 NULL, 다르면 수식1 반환
+- - CASE ~ WHEN ~ ELSE ~ END: 연산자
+- 문자열 함수: [S 함수();]
+- - ASCII(아스키 코드), CHAR(숫자): 문자 아스키 코드 값과 숫자 아스키 코드값 반환
+- - BIT_LENGTH/CHAR_LENGTH/LENGTH(문자열): Bit, 문자 크기/문자 개수/Byte 수 반환
+- - CONCAT(문자열1, 문자열2, ...): 문자열 연결
+- - CONCAT_WS(구분자, 문자열1, 문자열2, ...): 구분자 추가 문자열 연결
+- - ELT(위치, 문자열 위치1, 문자열 위치2, ...): 위치 번째 문자열 반환
+- - FIELD(찾을 문자열, 문자열 위치1, 문자열 위치2, ...): 찾을 문자열 위치 (숫자로) 반환
+- - FIND_IN_SET(찾을 문자열, 문자열 리스트 '위치1, 위치2, ...): 문자열 리스트 내 위치 (숫자로) 반환
+- - INSTR(기준 문자열, 부분 문자열 위치): 기준 문자열에서의 부분 문자열 위치 (숫자로) 반환 
+- - LOCATE(부분 문자열, 기준 문자열): <-> INSTR(기준, 부분)
+- - FORMAT(숫자, 소수점 자릿수): 소수점 아래 자릿수 표현
+- - BIN/HEX/OCT(숫자): 2/16/8진수 반환
+- - INSERT(기준 문자열, 위치, 길이, 삽입할 문자열): 위치부터 길이까지 지우고 삽입
+- - LEFT/RIGHT(문자열, 길이): 왼/오른쪽부터 길이만큼 반환
+- - UPPER/LOWER(문자열): 소(대)문자를 대(소)문자로 반환
+- - LPAD/RPAD(문자열, 길이, 채울 문자열): 길이만큼 늘린 후 문자 채움
+- - LTRIM/RTRIM(문자열): 왼/'오른쪽 공백 제거, 중간은 안됨
+- - REPEAT(문자열, 횟수): 횟수만큼 문자열 반환
+- - REPLACE(문자열, 원래 문자열, 바꿀 문자열)
+- - REVERSE(문자열)
+- - SPACE(길이)
+- - SUBSTRING(문자열, 시작위치, 길이) / (... FROM ... FOR ...): 길이 생략시 끝까지 반환
+- - SUBSTRING_INDEX(문자열, 구분자, (+-)횟수): 구분자 횟수 번째 이후(전) 버림
+- 수학 함수: [S 함수();]
+- - ABS(숫자): 절댓값
+- - ACOS/ASIN/SIN/COS/TAN/ATAN(숫자)/ATAN2(숫자1, 숫자2): 삼각함수
+- - CEIL(ING)/FLOOR(숫자): 올림/내림
+- - ROUND/TRUNCATE(숫자, 반올림/버릴 자릿수): 반올림/버림
+- - CONV(숫자, 원래진수, 변환할 진수)
+- - DEGREES/RADIANS(숫자): 라디안/각도 각 각 변환
+- - PI()
+- - EXP(X)/LN(숫자)/LOG(숫자)/LOG(밑수, 숫자)/LOG2(숫자)/LOG10(숫자): 지수, 로그 함수
+- - MOD(숫자1, 숫자2) / 숫자1 MOD/% 숫자2: 숫자1을 숫자2로 나눈 나머지 값
+- - POW(ER)(숫자1, 숫자2): 거듭제곱값
+- - SQRT(숫자): 제곱근
+- - RAND(): 0 이상 1 미만의 실수
+- - - FLOOR(X+(RAND()*(Y-X)): X<=임의정수<Y
+- - SIGN(숫자): 양/0/음수 여부를 1/0/-1로 반환
+- 날짜 및 시간 함수: [S 함수();]
+- - ADD/SUBDATE(날짜, 차이): 날짜를 기준으로 차이를 더하거나 뺀 날짜
+- - ADD/SUBTIME(날짜/시간, 시간): 날짜/시간을 기준으로 시간을 더하거나 뺀 결과
+- - CUR(RENT_)DATE/TIME(): 현재 '연-월-일'/'시:분:초'
+- - NOW/SYSDATE(): 현재 '연-월-일 시:분:초'
+- - YEAR/MONTH/DAY(날짜)
+- - HOUR/MINTUE/SECOND/MICROSECOND(시간)
+- - DATE/TIME(NOW()): 현재 연-월-일/시:분:초
+- - DATE/TIMEDIFF(날짜/시간1, 날짜/시간2): 날짜/시간2 - 날짜/시간1
+- - DAYOFWEEK/YEAR(날짜): 주/연 중 몇 번째 날짜인지
+- - MONTHNAME()
+- - LAST_DAY(날짜)
+- - MAKEDATE(연도, 정수): 연도에서 정수만큼 지난 날짜
+- - MAKETIME(시, 분, 초): '시:분:초'의 타임 형식 제공
+- - PERIOD_ADD(연월, 개월수): 연월에서 개월수만큼 지난 연월(YYYYMM타입) 반환
+- - PERIOD_DIFF(연월1, 연월2): 연월2 - 연월1의 개월수
+- - QUARTER(날짜)
+- - TIME_TO_SEC(시간): 시간을 초 단위로 반환
+- 시스템 정보 함수: [S ... F ...; S 함수();]
+- - USER(): 현재 사용자
+- - DATABASE(): 현재 데이터베이스
+- - FOUND_ROWS(): 바로 앞 SELECT 문에서 조회된 행의 개수
+- - ROW_COUNT(): 바로 앞 INSERT, UPDATE, DELETE 문에서 수행된 행의 개수, CREATE, DROP 문은 0을, SELECT 문은 -1 반환
+- - VERSION(): 현재 MySQL 버전
+- - SLEEP(초): 쿼리 실행 잠깐 멈춤
+- 그 외 함수: ...
+
+7.2. 조인
+
+- 조인: 두 개 이상의 테이블을 묶어 하나의 결과 집합으로 만듦, 별칭 설정은 FROM 절 뒤 [... FROM 테이블 별칭 INNER JOIN 테이블 별칭 ...]
+- INNER JOIN: [S 컬럼목록 F 테이블1 「INNER」 JOIN 테이블2 ON 조인조건(테이블1.컬럼=테이블2.컬럼) 「W 검색조건(테이블1.컬럼=조건)」;], 2를 1(기준)에 조인, WHERE 생략 시 모든 행에 반복, 조인 조건에 맞는 공통 행 조인
+- OUTER JOIN: 조인 조건에 맞지않는 행까지도 조인, [S 컬럼목록 F 테이블L LEFT/RIGHT/FULL 「OUTER」 JOIN 테이블R ON 조인조건 「W 검색조건」;] 
+- CROSS JOIN: 카티션곱, ON 사용 불가능, 사실상 무의미, 의도적인 테스트 데이터 생성시 사용
+- SELF JOIN: 다른 컬럼에 존재하는 같은 값을 연결할 시 사용
+- UNION: 행 결합(_ EX)행1, 행2 + 행3, 행4 = 행1, 행2, 행3, 행4), 컬럼의 갯수와 타입(호환(자동변환가능))이 같아야 함, [SELECT 컬럼1, 컬럼2, ... , FROM 테이블 UNION 「ALL」 SELECT 컬럼3, 컬럼4, ... FROM 테이블;)], ALL 사용시 중복 컬럼도 출력, 컬럼명은 UNION 앞 컬럼을 따름, 
+- NOT IN: [SELECT ... FROM ... WHERE ... NOT IN (S ... F ... W ...);] 첫 쿼리 결과 중 두 번째 쿼리 결과 제외
+- IN: [SELECT ... FROM ... WHERE ... IN (S ... F ... W ...);] 첫 쿼리 결과 중 두 번째 쿼리 결과만 조회
+
+7.3. 프로그래밍
+
+CHAP 8. 테이블과 뷰 ddl
+
+8.1 테이블
+
+- 생성: [CREATE TABLE 테이블 (컬럼1 타입(길이) (제약조건), 컬럼2 ... , ...);]
+- - 정보 확인: [DESCRIBE 테이블;]
+- - 키 확인: [SHOW KEYS FROM 테이블;]
+- 제약 조건: 데이터 무결성 유지, 조건 만족 시 데이터 입력 가능
+- 제약 조건 설정: 테이블 생성 시 [C T ... (컬럼1 타입(길이) (제약조건), ...);], 혹은 [C T ... (컬럼1 타입(길이), ... , 「CONSTRAINT」 제약조건 「제약조건별칭」 컬럼);] 혹은 생성 후 변경 [C T ... (컬럼1 타입(길이) , ...); ALTER TABLE 테이블 ADD CONSTRAINT 제약조건별칭 제약조건 컬럼;]
+- - PRIMARY KEY: 기본 키, 행 데이터 구분 식별자, NOT NULL + UNIQUE, 다수 열 설정 시 [C T ... ( ... , 「CONSTRAINT」 PRIMARY KEY 「제약조건별칭」 (컬럼1, 컬럼2, ...);] 혹은 생성 후 변경 단계에서 [C T ... (컬럼1 타입(길이) , ...); ALTER TABLE 테이블 ADD CONSTRAINT 제약조건별칭 PRIMARY KEY (컬럼1, 컬럼2, ...);]
+- - FOREIGN KEY: 외래 키, 두 테이블 사이 관계 선언, 외래 테이블이 참조/기준 테이블(PRIMARY KEY 혹은 UNIQUE)에 의존, 생성 시 [C T ... ( ... , FOREIGN KEY 컬럼 REFERENCES 기준테이블(컬럼));]  생성 후 변경 [C T ... ( ... ); ALTER TABLE 테이블 ADD CONSTRAINT 제약조건별칭 FOREIGN KEY 컬럼 REFERENCES 기준테이블(컬럼);]
+- - - ON UPDATE/DELETE CASCADE(<->NO ACTION): 기준 테이블의 데이터가 변경되었을 시 외래 키 테이블도 자동 적용, [ALTER ... REFERENCES ... ON UPDATE/DELETE CASCADE;], 별도 지정하지 않을 시 NO ACTION
+- - UNIQUE: PRIMARY KEY와 비슷하나 NULL 값 허용
+- - CHECK: 입력 데이터 점검, [... 컬럼명 타입(길이) CHECK 조건 ...]
+- - DEFAULT: 입력 데이터 없을시 기본 값 정의, [... DEFAULT 값 ...] 혹은 [... ALTER ... ALTER COLUMN 컬럼 SET DEFAULT 값;]
+- - NULL: 아무 것도 없다, 공백/' '이나 0과는 다름
+- 압축: [C T ... ROW_FORMAT=COMPRESSED;]
+- 임시: [CREATE TEMPORARY TABLE ...;], 다른 테이블과 동일한 이름 사용 가능, 종료시 삭제됨
+- 삭제: [DROP TABLE 테이블;] 
+- 컬럼 추가: [ALTER TABLE ... ADD 컬럼 타입(길이) 「FIRST/AFTER 컬럼1」 ...;]
+- 컬럼 삭제: [A T ... DROP COLUMN 컬럼;]
+- 컬럼 제약 조건 삭제: [A T ... DROP 제약조건;], 기본 키 제거 시 외래 키 먼저 제거 후 제거
+- 컬럼 이름 및 타입 변경: [A T ... CHANGE 컬럼 변경명 변경타입;]
+
+8.2 뷰
+
+8.3 테이블스페이스
