@@ -1,3 +1,4 @@
 # Today I Learned
 
-# NOTE: GIT 개설 전 수업 내용들을 정리하며 복습한 자료
+> 📂 NOTE: TIL 생성 전, 메모장에 복습했던 자료 </br>
+> 📂 ...
