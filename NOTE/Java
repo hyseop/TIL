@@ -1,0 +1,265 @@
+Java
+
+CHAP2 변수
+
+- 변수(variable): 하나의 값을 저장
+- 상수(constant): 값을 한 번만 저장(프로그래밍 상의 상수로 정의)
+- 리터럴(literal): 그 자체로 값을 의미(수학에서의 상수)
+- - [int year(v) = 2023(l);], [final int MAX_VALUE(c) = 100(l);]
+- 두 변수의 값 바꾸기: [int tmp; / tmp = x; / x = y; / y = tmp;]
+- 자료형: 기본형, 참조형
+- - 기본형: 실제 값 저장
+- - - 논리형: boolean(1byte), true or false
+- - - 문자형: char(2) 
+- - - 정수형: byte(1), short(2), int(4), long(8)- - - 실수형: float(4), double(8)
+- - 참조형: 객체 주소 저장, 기본형을 제외한 나머지
+- printf: 변수 값 형식 변환 출력 기능, [System.out.printf("변수1:지시자, ...", 변수1, ...);]
+- - 지시자(specifier): %d(10진 정수, decimal), %x(16진 정수, hexa-decimal), %f(부동 소수점, floating point), %c(문자, character), %s(문자열, string), %e(지수, exponent) 
+- - - [EX] %20s: 20글자 출력 공간 확보, 우측 정렬 / %-20s 좌측 정렬 / %.8s 왼쪽 8글자 출력
+- 오버플로우(정수): 표현 가능 범위 초과, 에러X, 결과가 달라짐, 최대값+1=최소값 / 최소값-1=최대값
+- 형 변환 
+- - 숫자->문자: [(char)(3+'0')='3']
+- - 문자->숫자: ['3'-'0'=3]
+- - 숫자->문자열: [3+""="3"]
+- - 문자열->숫자: [Integer.parseInt("3")=3] 또는 [Double.parseDouble("3.14")=3]
+- - 문자열->문자: ["3".charAt(0)='3']
+- - 문자->문자열: ['3'+""="3"]
+
+- char: '', 문자, 변경 가능, 저장될 때 정수(아스키코드)로 치환됨 // char[]: 문자 배열
+- String: "", 문자열 클래스, char들의 배열, char와 달리 치환 없이 문자 결합
+
+CHAP3 연산자
+
+- 형 변환: 변수, 상수 타입을 다른 타입으로, 캐스트(팅), [double d = 42.3; / int score = (int)d;]
+- 자동 형변환: 넓은 범위로 변환, 범위 초과(좁은 범위로 변환)시 에러(피연산자 중 한 쪽 변환하면 됨)
+- Math.round():  소수점 첫째 반올림
+- 조건 연산자: [조건? 식1 : 식2]
+- && > || / 산술>비교>논리>대입 / 단항>이항>삼항 / 단항, 대입은 오른쪽부터
+
+CHAP4 조건문과 반복문
+
+- if
+- switch: [switch (조건식) {case 값1: 수행 break;  case 값2: 수행 break; ... default: 수행}], 조건식 결과값은 정수, 문자열, case 값은 정수 상수(문자 포함), 문자열, 중복 불허
+- for: [for (초기화; 조건식; 증감식) {}]
+- while: [초기화; while (조건식) {증감식;}], 초기화나 증감식이 필요하지 않은 경우 while문
+- do-while: [do {} while (조건식);], for 및 while문은 조건에 따라 한 번도 수행 안될 수 있으나 do-while문은 최소 한 번 수행
+- break
+- continue: 반복문 전체를 벗어나지 않고 다음 반복을 수행, for문의 경우 증감식으로, while, do-while문의 경우 조건식으로 이동
+- - [별칭 : 반복문 ...]: 중첩 반복문 벗어날 시
+
+CHAP5 배열
+
+- 배열: 같은 타입, 여러 변수, 하나의 묶음
+- 선언: [타입[] 참조변수;] 또는 [타입 참조변수[];]
+- 생성(저장공간): [참조변수 = new 타입[길이];]
+- - 선언과 생성: [타입[] 참조변수 = new 타입[길이];] 
+- 0<인덱스<길이-1
+- 길이 변경: 재선언 및 생성
+- 초기화: 생성시 0으로 자동 초기화, 원할 시 각 요소에 직접, [타입[] 참조변수 = new타입[길이]; / 참조변수[0] = 값1; / 참조변수[1] = 값2; ...]
+- - 선언, 생성 및 초기화: [타입[] 참조변수 = 「new 타입」[길이] {값1, 값2, ...};] // 선언과 생성을 따로하는 경우에는 안됨
+- 2차원 배열 선언: [타입[][] 참조변수;] 또는 [타입 참조변수[][];] 또는 [타입[] 참조변수[];]
+- 2차원 배열 선언, 생성 및 초기화: [타입[][] 참조변수 = 「new 타입」[행][열] {값1, 값2, ...};]
+- java.util.Arrays
+- - equals(), deepEquals(): 두 배열 비교, true or false // 기본형 변수 비교시 연산자 ==
+- - toString(), deepToString(): 배열 요소를 문자열로 출력
+- - copyOf(배열이름, 배열.length), copyOfRange(배열이름, 시작범위, 끝범위+1)
+- - sort(): 정렬
+
+CHAP6 객체 지향 프로그래밍 1
+
+- 클래스: 객체 정의, 객체 설계도 및 틀, 클래스는 객체 생성에 사용
+- 객체: 인스턴스, 다수 속성(멤버변수) 및 기능(메소드)으로 구성, 클래스 정의에 따라 생성, 객체는 참조변수만을 통해서만 다룰 수 있음
+- - 선언: [클래스 참조변수;]
+- - 생성(저장공간): [참조변수 = new 클래스();]
+- - 선언과 생성: [클래스 참조변수 = new 클래스();]
+- 메소드: 특정 작업 수행 문장의 묶음
+- - 선언: [반환타입/출력 메소드이름(매개변수선언/입력) {구현;}] // 반환 타입없을 경우 void, 매개변수 = 인수 
+- - 호출: [「타입 결과저장변수 = 」「참조변수.」메소드(매개변수));]
+- - - return: 구현부 내, 메소드 종료 후 호출한 메소드로 돌아감, 메소드에는 적어도 하나의 return문 필요, 반환타입 void: return 생략 가능(자동 생성), void가 아닌 경우 return; 포함, 리턴과 반환 값은 적어도 자동 형 변환 가능하거나 일치해야 함
+- - - 메소드 통해 객체 받기(객체 생성 불가 시): [클래스 참조변수 = 클래스.메소드(매개변수);]
+- - 오버로딩: 한 클래스 내 같은 메소드 이름, 다른 매개변수 타입 또는 개수, 반환 타입은 무관
+- - 생성자: 객체 초기화 메소드, [클래스(타입 변수1, 타입 변수2, ...) { }], 생성자명은 클래스명, 리턴값 없어 void 붙여야 하나, 모든 생성자가 리턴값없어 생략
+- - - 기본 생성자: 클래스에는 반드시 하나의 생성자, 정의하지 않을 시 컴파일러가 자동 제공
+- - - this(): 같은 클래스 내 다른 생성자 호출, 생성자이름으로 클래스이름 대신 this 사용, 반드시 첫 줄에서만
+- 변수
+- - 지역 변수: 초기화 필수
+- - 멤버 변수: 자동 초기화됨
+- - - 클래스 변수: static, 공유, 객체 생성없이 사용 [클래스.변수;]
+- - - 인스턴스 변수: non-static, 객체 생성 후 사용 [클래스 참조변수 = new 클래스();   참조변수.변수;]
+- - - 명시적 초기화: 선언 + 초기화
+- - - 초기화 블럭
+- - - - 클래스 (변수) 초기화 블럭: [static {System.out.println("static { }");}]
+- - - - 인스턴스 (변수) 초기화 블럭: [{System.out.println("{ }");}]
+- - 참조변수 this: [생성자(매개(지역)변수1, 매개변수2, ...) {this.인스턴스변수1 = 매개변수1, this.인스턴스변수2 = 매개변수2, ...;}] 
+
+CHAP7 객체 지향 프로그래밍 2
+
+- 상속(is a): 기존 클래스 재사용하여 새 클래스 [class Parent { } / class Child extends Parent {...}], 생성자와 초기화 블럭 제외 모든 멤버 상속, 조상은 하나만 허용
+- 포함(has a): [class Point {int x; int y;} / class Circle {int x; int y; int r}] -> [class Circle {Point c = new Point(); int r;}]
+- Object 클래스: 모든 클래스의 최상위 조상, 상속받지 않는 클래스를 자동으로 상속받게 함
+- 오버라이딩: 상속받은 메소드 내용 사용 혹은 변경 사용, 선언부 일치해야 함, 접근제어자는 부모<=자손, 예외 수는 부모>=자손
+- - 접근제어자 범위: pulic>protected>(default)>private
+- 오버로딩: 새 메소드 정의 // 같은 이름의 메소드라도 매개변수가 다르면 새 메소드
+- 참조변수 super: [super.조상변수]
+- super(): 조상 생성자 호출 // 생성자는 상속되지 않으므로
+- 패키지: 클래스 묶음
+- import 문: 타 패키지 클래스 사용 시 패키지명 생략, [import.패키지.클래스;], 클래스명까지 생략시 [static.import.패키지.클래스;]
+- 제어자(modifier): 클래스, 변수, 메소드의 선언부에 사용, 하나의 대상에 여러 제어자 조합 사용 가능하나 접근 제어자는 하나만 가능
+- - 접근제어자(캡슐화)
+- - - public: 제한없음
+- - - protected: 동 패키지, 타 패키지 자손 클래스
+- - - (default): 동 패키지
+- - - private: 동 클래스
+- - 그 외: static, final, abstract, native, transient, synchronized, volatile, strictfp
+- - - static: 클래스, 공통
+- - - - 멤버 변수: 인스턴스 생성없이 사용 가능
+- - - - 메소드: 인스턴스 생성없이 호출 가능, 메소드 내 인스턴스 멤버 사용 시 객체 생성 후 사용
+- - - - 초기화 블럭
+- - - final
+- - - - 클래스: 상속 불가
+- - - - 메소드: 오버라이딩 불가
+- - - - 멤버 및 지역 변수: 상수화
+- - - abstract: 추상, 미완성
+- - - - 클래스: 인스턴스 생성 불가
+- - - - 메소드: 구현부 없음
+- 참조 변수의 다형성: 조상 타입의 참조변수로 (자손 타입이) 인스턴스 참조, 반대는 불가, [조상클래스 조상참조변수 = new 자손클래스()]
+- 참조 변수의 형 변환: 상속 관계 간의 형변환, 조상 타입으로 변경 시 형변환 생략 가능하나 반대는 생략 불가능 [(조상클래스 조상참조변수 = 「(조상클래스)」자손참조변수)]
+- instanceof 연산자: 참조변수가 참조하고 있는 인스턴스 타입(클래스) 확인, 주로 조건문에서, [참조변수 instanceof 타입(클래스)]
+- 매개 변수의 다형성: 조상 타입의 참조변수로 매개변수 사용
+- 추상 클래스: 미완성 설계도, 추상 메소드를 포함하고 있다는 것 외에 일반 클래스와 같음(일반 메소드 및 멤버변수도 가능), 인스턴스 생성 불가(선언은 가능)
+- 인터페이스: 밑그림 설계도, 추상 메소드와 상수만 가능, 모든 멤버 변수는 public statc final, 모든 메소드는 public abstact, 제어자 모두 생략 가능, 인터페이스 메소드 중 일부만 구현시 추상 클래스로 선언 해야 함, 인스턴스 생성 불가(선언은 가능), 클래스 상속과 인터페이스 구현 동시 가능 // JDK 1.8 이후 스태틱 및 디폴트 메소드도 가능해짐
+- - 인터페이스 상속: 인터페이스로부터만 가능(자손), 다중 상속 가능(클래스는 불가능) // 클래스가 인터페이스를 상속받는 것은 가능(조상)
+- - 인터페이스 다형성: 인터페이스 타입의 매개변수로 인스턴스 참조, [인터페이스 인터페이스참조변수 = 「(인터페이스)」new 자손참조변수()], 형 변환 및 매개변수로의 사용도 가능
+
+CHAP8 예외처리
+
+- 에러: 코드에 의해 수습 불가능한 오류
+- 예외: 코드에 의해 수습 가능한 오류
+- Object - Throwable 
+- - Error - ...
+- - Exception: 사용자 실수 등 외적, checked 예외, 컴파일 불가능 
+- - - IOException
+- - - ...
+- - - RuntimeException: 프로그래머 실수, unchecked 예외, 컴파일 완료(예외 처리 강제하지 않음)
+- - - - ...
+- try-catch 문: 예외처리, [try { } catch () { } catch () { } ...]
+- - printStackTrace()/getMessage(): catch블럭 ()내의 참조변수를 통해 호출 스택 정보와 예외 메시지 출력
+- - 멀티 catch 문: JDK 1.7 ~, [try { } catch ( | | ...) { }], 조상과 자손 관계의 클래스일 경우 조상만 쓰면 됨
+- throw: 고의 예외 발생, [Exception e = new Exception("고의 예외 발생"); / throw e;], = [throw new Exception;]
+- throws: 메소드 고의 예외 발생, [void method() throws Exception1, Exception2, ... { }]
+- finally 블럭: 예외 발생과 무관하게 실행, 예외 발생 시 try -> catch -> finally 미발생 시 try -> finally, [try { } catch () { } catch () ... { } ... finally { }], 마지막에 위치
+
+CHAP9 java.lang패키지와 유용한 클래스
+
+- java.util.Object: 멤버 변수는 없으며, 11개의 메소드가 있음
+- - clone(): protected Object clone(), 객제 자신 복사본 반환
+- - equals(): public boolean eqauls(Object obj), [참조변수1.eqauls(참조변수2)], 참조변수 주소값 비교 //  비교하려면 오버라이딩
+- - hashCode(): Public Class hashCode(), 값의 위치 해시코드 반환, 주소값 판단 // 값 판단하려면 오버라이딩
+- - toString(): Public String toString(), 클래스명과 16진수 해시코드 반환 // 보통 오버라이딩하여 사용함, String 클래스의 toString()
+- java.util.String: public final class String implements java.io.Serializable, Comparable {private char[] value; ...}, fianl, 한 번 생성된 문자열은 변경 불가능, +연산자로 결합시 새 문자열 생성, 문자열 생성에는 리터럴 지정(주소 저장) [String str = "abc";]과 String클래스 생성자 [String str = new String("abc");], // 리터럴 비교 시 equals() true, == true, 인스턴스 비교 시 eqauls() true, == false(주소 다름) // String 클래스의 equals()는 오버라이딩되어 값 비교함, == 연산자는 주소 값 비교(기본형은 주소가 없으므로 값 비교, Call by Value)
+- - String(): [String s = new String("Hello");] / [char[] c = {'H', 'e', 'l', 'l', 'o'}; / String s = new String(c);] / [StringBuffer sb = new StringBuffer("Hello"); / String s = new String(sb);], 같은 내용 인스턴스 생성
+- - charAt(): [String s = "Hello"; / char c = s.charAt(1);] => [c='e'], 지정 위치 문자 반환
+- - compareTo(): [int i = "aaa".compareTo("aaa"); / int i2 = "bbb".compareTo("aaa");] => [i=0 / i=-1], 사전순 문자열 비교 같으면 0 이전이면 음수 이후면 양수
+- - concat(): [String s = "Hello"; / String s2 = s.concat(" World");] => [s2="Hello World"], 문자열을 뒤에 덧붙임
+- - contains(): [String s = "abcdefg"; / boolean b = s.contains("bc");] => [b=true], 문자열 포함 여부
+- - endsWith(): [String file = "Hello.txt"; / boolean b = file.endsWith("txt");] => [b=true], 지정 문자열로 끝나는지 확인
+- - equals(): [String s = "Hello"; / boolean b = s.equals("hello");] => [b=false], 
+- - equalsIgnoreCase(): [String s = "Hello"; / boolean b = s.equalsIgnoreCase("hello");] => [b=true], 대소문자 구분없이 비교 
+- - indexOf(): [String s = "Hello"; / int idx1 = s.indexOf('o'); / int idx2 = s.indexOf('k');] => [idx1=4 / idx2=-1], 문자열 존재 여부 확인 및 위치 반환, 없을 시 -1 / [String s = "Hello"; / int idx1 = s.indexOf('e', 0); / int idx2 = s.indexOf('e', 2);] => [idx1=1 / idx2=-1], 지정위치부터 확인, 없을 시 -1 / [String s = "ABCDEFG"; / int idx = s.indexOf("CD");] => [idx=2]
+- - intern(): [String s = new String("abc"); / String s2 = new String("abc"); / boolean b = (s==s2); / boolean b2 = s.eqauls(s2); / boolean b3 = (s.intern() == s2.intern())] => [b=false / b2=true / b3=true], 문자열 상수풀 등록, 기등록 시 주소값 반환
+- - lastIndexOf(): [String s = "java.lang.Object"; / int idx1 = s.lastIndexOf('.'); / int idx2 = s.indexOf('.');] => [idx1=9 / idx2=4], 오른쪽에서부터 찾아 왼쪽에서부터의 위치 반환, 없을 시 -1 / [String s = "java.lang.java"; / int idx1 = s.lastIndexOf("java"); / int idx2 = s.indexOf("java");] => [idx1=10 / idx2=0]
+- - length(): [String s  = "Hello"; / int length = s.length();]
+- - replace(): [String s = "Hello"; / String s1 = s.replace('l', 'L');] => [s1="HeLLo"], 문자 변환 / [String s = "Hellollo"; / String s1 = s.replace("ll", "LL");] => [s1="HeLLoLLo"], 문자열 변환
+- - replaceAll(): [String ab = "AABBAABB"; / String r = ab.replacementAll("BB", "bb");] => [r="AAbbAAbb"], 모두 변경
+- - replaceFirst(): [String ab = "AABBAABB"; / String r = ab.replacementAll("BB", "bb");] => [r="AAbbAABB"], 첫 번째 것만 변경
+- - startsWith(): [String s = "java.lang.Object"; / boolean b = s.startsWith("java"); / boolean b2 = s.startsWith("lang");] => [b=true / b2=false], 주어진 문자열로 시작하는지 검사
+- - substring(): [String s = "java.lang.Object"; / String c = s.substring(10); / String p = s.substring(5,9);] => [c="Object" / p="lang"], 범위 문자열 반환, begin<=x<end
+- - toString(): [String s = "Hello"; / String s1 = s.toString();] => [s1 = "Hello"], 인스턴스 저장된 문자열 반환
+- - toCharArray(): [String s = "Hello World"; / char[] charArr = s.toCharArray();] => [charArr="Hello World"], 문자열(String)을 문자배열(char[])로
+- - toUpperCase(): [String s = "Hello"; / String s1 = s.toUpperCase();] => [s1 = "HELLO"]
+- - toLowerCase(): [String s = "Hello"; / String s1 = s.toLowerCase();] => [s1 = "hello"]
+- - trim(): [String s = " Hello World "; / String s1 = s.trim();] => [s1 = "Hello World"], 양 끝 공백 제거, 중간은 안됨
+- - valueOf(): [... String l = String.valueOf(100L); / String f = String.valueOf(10f); ...] => [... l="100" / f="10.0" ...], 지정 값 문자열로 반환, 참조 변수의 경우 toString()과 같이 인스턴스 저장된 문자열 반환
+- - split(): [String animals = "dog,cat,bear"; / String[] arr = animals.split(",");] => [arr[0] = "dog" / arr[1] = "cat" / arr[2] = "bear"], 문자열을 분리자로 나누어 배열에 담아 반환 / [String animals = "dog,cat,bear"; / String[] arr = animals.split(",", 2);] => [arr[0] = "dog" / arr[1] = "cat,bear"], 지정 수로 인덱스 제한
+- - join(): [String animals = "dog,cat,bear"; / String[] arr = animals.split(",");] => [arr[0] = "dog" / arr[1] = "cat" / arr[2] = "bear"] -> [String str = String.join("-", arr);] => [str="dog-cat-bear"]
+- java.util.StringJoiner, add(): [String animals = "dog,cat,bear"; / String[] arr = animals.split(",");] => [arr[0] = "dog" / arr[1] = "cat" / arr[2] = "bear"] -> [StringJoiner sj = new StringJoiner("-", "[", "]"); / for(String s : arr) sj.add(s); / sj.toString();] => [sj="[dog-cat-bear]"] // for (A : B): B의 객체를 A에 차례대로 삽입, B의 객체가 없을 때까지
+- - 문자열 기본형 간 변환: [int i = 100; / String str = i + "";] / [String String.valueOf(boolean b(/...))] <-> [Boolean.parseBoolean(/.../Integer.parseInt/,,,)(String s)]
+- java.util.StringBuffer: public final class StringBuffer implements java.io.Serializable {private char[] value; ...}, String 클래스와 달리 인스턴스 생성시 지정된 문자열 변경 가능, 인스턴스 생성 시 크기 지정 가능(기본 크기는 16), char형 배열의 참조 변수를 인스턴스 변수로, equals()가 오버라이딩되어있지 않아 ==와 같이 false // toString()을 통해 비교시 true(String클래스에는 equals()가 오버라이딩되어 있음)
+- - StringBuffer(): [StringBuffer sb = new StringBuffer();] => [sb=""], 16문자 버퍼 인스턴스 생성 / [StringBuffer sb = new StringBuffer(10);] => [sb=""], 10문자 버퍼 인스턴스 생성 / [StringBuffer sb = new StringBuffer("hi");] => [sb="hi"]
+- - append(): [StringBuffer sb = new StringBuffer("abc"); / [sb.append("123")「.append("xyz"). ,,,」;/StringBuffer sb2 = sb.append("123")「.append("xyz"). ,,,」;]] => [sb=sb2="abc123"], 문자열 변경 후 주소를 반환하여 같은 주소에 저장, 반환타입은 StringBuffer, 연속 호출 가능(반환 타입이 자신이기 때문)
+- - capacity(): [StringBuffer sb = new StringBuffer(100); / sb.append("abcd"); / int bufferSize = sb.capacity(); / int stringSize = sb.length();] => [bufferSize = 100; / stringSize = 4;] 
+- - charAt(): [StringBuffer sb = new StringBuffer("abc"); / char c = sb.charAt(2);] => [c='c'], index 문자 반환
+- - delete(): [StringBuffer sb = new StringBuffer("0123456"); / StringBuffer sb2 = sb.delete(3,6);] => [sb="0126" / sb2="0126"], start<=x<end 제거
+- - deleteCharAt(): [StringBuffer sb = new StringBuffer("0123456"); / sb.deleteCharAt(3);] => [sb="012456"], index 문자 제거
+- - insert(): [StringBuffer sb = new StringBuffer("0123456"); / sb.insert(4, '.');] => [sb="0123.456"], 지정 위치 문자 추가(문자열로 변환 후)
+- - length(): [StringBuffer sb = new StringBuffer("0123456"); / int length = sb.length();] => [length=7;]
+- - replace(): [StringBuffer sb = new StringBuffer("0123456"); / sb.replace(3, 6, "AB");] => [sb="012AB6"], start<=x<end 교체
+- - reverse(): [StringBuffer sb = new StringBuffer("0123456"); / sb.reverse();] => [sb="6543210"]
+- - setCharAt(): [StringBuffer sb = new StringBuffer("0123456"); / sb.setCharAt(5, 's');] => [sb="01234s6"], index 교체
+- - setLength(): [StringBuffer sb = new StringBuffer("0123456"); / sb.setLength(5); / StringBuffer sb2 = new StringBuffer(10); / sb2.setLength(10); / String str = sb2.toString().trim()] => [sb="01234" / sb2="0123456   " / str="0123456"], 길이 변경, 빈 공간은 null(\u0000)
+- - toString(): [StringBuffer sb = new StringBuffer("0123456"); / String str = sb.toString();], 인스턴스 문자열을 String으로 반환
+- - substring(): [StringBuffer sb = new StringBuffer("0123456"); / String str = sb.substring(3); / String str2 = sb(substring(3, 5);] => [str=3456 / str2=34], start<=x「<end」 반환
+- java.util.StringBuilder: StringBuffer 쓰레드 동기화만 뺀 클래스
+- java.util.Math: private(클래스 내 인스턴스 변수가 없어 인스턴스 생성할 필요가 없기 때문), 모든 메소드는 static, 2개 상수(public static final double E, PI) 정의
+- - abs(): [double d = Math.abs(-10.0);] => [d=10.0]
+- - ceil/floor(): [double d = Math.ceil(-10.1);] => [d=-10]
+- - max/min(): [double d = max(9.1, 9.2)] => [d=9.2]
+- - random(): [double d = Math.random(); / int i = (int)(Math.random()*10)+1;] => [0.0<=d<1.0 / 1<=i<11]
+- - rint(): [double d = Math.rint(4.5);] => [d=4], 반올림 값으로 반환, .5의 경우 짝수로
+- - round(): [long l = Math.round(4.5); double d = Math.round(9.7552);] => [l=5/d=90.76], 소수점 첫자리 반올림 정수, .5역시 반올림, 실수형의 경우 셋자리 반올림
+- java.util.Wrapper: public final class Integer extends Number implements Comparable {private int value;}, 기본형 변수를 객체로 바꿈, equals() 오버라이딩
+- - Boolean(boolean value/String s), [Boolean b = new Boolean(true/"true");]
+- - Character(char value), [Character c = new Character('a');]
+- - Byte(byte value/String s), [Byte b = new Byte(10/"10");]
+- - Short(short value/String s), [Short s = new Short(10/"10");]
+- - Integer(int value/String s), [Integer i = new Integer(10/"10");]
+- - Long(long value/String s), [Long l = new Long(10/"10");]
+- - Float(double value/float value/String s), [Flaot f = new Float(1.0/1.0f/"1.0f");]
+- - Double(double value/String s), [Double d = new Double(1.0/"1.0");]
+- java.util.Number: public abstract class Number implements java.io.Serializable {public abstract int/long/float/double i/l/f/dValue(); ...}, 숫자를 멤버 변수로 갖는 래퍼 클래스의 조상
+- - 문자열 숫자로 변환
+- - - 문자열 -> 기본형: [byte/short/int/long/float/double b/s/i/l/f/d = Byte/Short/Integer/Long/Float/Double.parseByte/Short/Int/Long/Float/Double("100"/"100"/"100"/"100"/"3.14"/"3.14");]
+- - - 문자열 -> 래퍼 클래스: [Byte/Short/Integer/Long/Float/Double b/s/i/l/f/d = Byte/Short/Integer/Long/Float/Double.valueOf("100"/"100"/"100"/"100"/"3.14"/"3.14");]
+- - - 문자열 -> 넘버 클래스: [byte/short/int/long/float/double b/s/i/l/f/d = new Byte/Short/Integer/Long/Float/Double.("100"/"100"/"100"/"100"/"3.14"/"3.14").byte/short/int/long/float/doubleValue();]
+- 오토박싱, 언박싱: 기본형과 참조형간의 덧셈이 가능하도록 기본형 값을 래퍼클래스 객체로 자동 변환하는 것, 반대는 언박싱, [int i = 5; / Integer 12ab = new Integer(7); / int sum = i +12ab.intValue();]
+
+CHAP10 날짜와 시간 & 형식화
+
+- java.util.Calendar: abstract, 인스턴스 생성 불가 [Calendar cal = new Calendar();] X, 메소드 통해 인스턴스 받기 [Calender cal = Calendar.getInstance();] O, 
+- - get(): [Calendar cal = Calendar.getInstance(); cal.get(calendar.YEAR/MONTH/DATE/HOUR/MINUTE/SECOND/MILLISECOND/AM_PM/ZONE_OFFSET/WEEK_OF_YEAR/.../DAY_OF_YEAR/.../DAY_OF_WEEK_IN_MONTH/...);]
+- - set(): [Calendar cal = Calendar.getInstance(); cal.set(calendar.YEAR/MONTH/..., 2023/4/...);]
+- - add(): [Calendar cal = Calendar.getInstance(); cal.add(calendar.YEAR/MONTH/..., 10/10/...);]
+- - roll(): [Calendar cal = Calendar.getInstance(); cal.roll(calendar.YEAR/MONTH/..., 10/10/...);], add()와 달리 타 필드 영향(일->월) 없음
+- java.text.Format
+- - java.text.DecimalFormat: [DecimalFormat df = new DecimalFormat(); df.foramt();]
+- - - 0: 10진, [0000.000] => [0123.450], 빈칸 0
+- - - #: 10진, [####.###] => [123.45]
+- - - .: 소수점, [#.#] => [123.4], 반올림, 중간값은 짝수로
+- - - -: 음수 부호, [-#.#] => [-123.5], 반올림, 중간값 음수는 홀수로
+- - - ,: 단위 구분자, [#,###.#] => [1,234.5]
+- - - ...
+- - java.text.SimpleDateFormat: [SimpleDateFormat sdf = new SimpleDateFormat(); sdf.format();], 추상클래스 DateFormat의 자손, DateFormat은 getDateInstance()를 통해 SimpleDateFormat의 인스턴스를 반환 받음
+- - - G(연대)/y(연도)/M(월)/w(연몇주)/W(월몇주)/D(연몇일)/d(월몇일)/F(월몇요일)/E(요일)/a(오전오후)/H(시간0~23)/k(1~24)/K(0~11)/h(1~12)/m(분0~59)/s(초0~59)/...
+
+CHAP11 컬렉션 프레임워크
+
+- 라이브러리: 연관 클래스와 인터페이스 묶음 / 유용한 기능의 모듈화
+- 프레임워크: 원칙 및 구조에 따라 설계된 클래스와 인터페이스 묶음, 표준화된 프로그래밍 방식 / 유용한 기능의 모듈화 + 프로그래밍 방식 정형화
+- -컬렉션 프레임워크: 자료 구조에 정렬, 탐색 등의 알고리즘을 구조화해 놓은 프레임워크, 여러 데이터 묶음 자료를 처리하기 위한 구조화 클래스 또는 인터페이스의 모음
+- - - Interface Collection(): List() + Map()
+- - - Interface List(): 순서 데이터, 데이터 중복 허용
+- - - - class ArrayList(), LinkedList(), Stack(), Vector(), ...
+- - - - Interface Set(): 순서X, 중복X
+_____ class HashSet(), TreeSet(), ...
+_ Interface Map(): 키(key)와 값(value)의 쌍(pair) 데이터, 순서X, 키 중복X, 값 중복 O
+_______ key란 value를 찾는 열쇠
+_____ class HashMap(), TreeMap(), Hashtable(), Properties(), ...
+stack: LIFO, ArrayList로 사용/ class로 제공됨/ 활용: 수식계산, 웹앞뒤 등
+queue: FIFO, LinkedList로 사용/ Interface로 제공됨/ 활용: 최근사용문서, 인쇄대기목록, 버퍼 등
+Interface Iterator: 컬렉션에 저장된 요소에 접근
+Interface ListIterator: Iterator에 양방향 조회 추가(List구현시에만 사용 가능)
+Interface Enumeration: Iterator의 구버젼
+컬렉션에는 Interface Iterator 정의, Interface Collection에는 iterator()(Iterator 구현 클래스의 인스턴스를 반환)
+
+CHAP14 람다와 스트림
+- ...
