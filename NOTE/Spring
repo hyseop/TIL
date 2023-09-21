@@ -80,5 +80,9 @@ POST /user 호출 -> [UserController] @PostMapping saveUser 함수 실행 -> JSO
 
 
 8
-Controller에서 getter가 있는 객체를 반환하면 JSON이 된다
+Controller에서 getter가 있는 객체를 반환하면 JSON이 된다 (<-@RestController)
+Get /user 호출 -> [UserController] @GetMapping getUsers 함수 실행 -> users 리스트에 담긴 User를 돌면서 UserResponse로 바꿔 responses에 추가 -> responses 반환 
+
+
+9
 
