@@ -8,6 +8,7 @@ JRE: Java Class Library, Java Runtime Environment, 자바 실행 환경, JVM + �
 JVM: Java Virtual Machine, 바이너리 코드를 읽고 검증하고 실행함
 자바의 버젼 = JDK 버젼
 
+
 빌드: 소스코드 파일을 컴퓨터에서 실행할 수 있는 독립 SW 가공물로 변환하는 과정, 독립 SW 가공물 = Artifact
 , (소스코드 컴파일, 테스트 코드 컴파일, 테스트 코드 실행, 테스트 코드 리포트 작성, 기타 추가 설정 작업 진행, 패키징 수행, 최종 SW 결과물(Artifact) 산출)
 실행: 코드를 컴파일을 거쳐 작동, 독립SW(Artifact)가 나올 수도 있고, 나오지 않을 수도 있다.
@@ -15,5 +16,40 @@ JVM: Java Virtual Machine, 바이너리 코드를 읽고 검증하고 실행함
 빌드툴: 소스코드의 빌드 과정을 자동으로 처리해주는 프로그램, 외부 소스코드(라이브러리) 자동 추가 및 관리
 - 메이븐: xml 설정, 외부 라이브러리 관리, 장황한 빌드 스크립트 문제 해결, xml이 특정 경우 복잡하고, xml 자체의 한계가 있음
 - 그레들: 그루비 언어로 설정, 외부라이버르리 관리, 유연한 빌드스크리브 작성, 성능 뛰어남
+
+
+의존성: 프로젝트에서 사용하는 라이브러리 나 프레임워크를 의미
+라이브러리: 미리 만들어져 있는 기능 가져다 사용하는 것, 김치찌개를 끓일 떄 필요한 김치를 사는 것( 배추 농사부터가 아닌)
+프레임워크: 미리 만들어져 있는 구조에 코드를 가져다 끼워 넣는 것, 김치찌개 원데이 클래스
+
+
+@SpringBootApplication: 스프링 실행을 위한 다양한 설정들을 자동으로 해줌
+서버?: 기능을제공하는프로그램 혹은 프로그램을 실행하는 컴퓨터
+DNS: Domain Name System, IP -> domain
+port: 특정인?
+택배 시스템 - 네트워크
+집 - 컴퓨터
+주소 - IP
+집 별칭 - 도메인
+택배 수령인 - 포트
+
+
+운송장: 내놓아라(행위)_포션빨간색2개(자원)_파란집둘째야
+ - HTTP(Hyper Text Transfer Protocol): GET(행위, HTTP Method)_ /portion(자원, Path)?color=red&count=2(자원세부조건, Query)__Host: sprig.com:3000
+운송장: 창고에넣어라_오크가죽_빨간집박스
+- HTTP: <POST(메소드)/oak(패스)/leather(쿼리)__Host: spring.com:3000>헤더____<오크가죽정보(Body)>바디
+GET: 데이터 달라, 쿼리
+POST: 저장하라, 바디
+PUT: 수정하라, 바디
+DELETE: 삭제하라, 쿼리
+API: Application Programming Interface, 정해진 약송글하여 특정 기능을 수행하는 것
+URL: Uniform Resource Locator, http(프로토콜)://spring.com:3000(도메인이름)/portion(경로,패스)?color=red&count=2(쿼리)
+HTTP응답: 서버측, ***요청:클라이언트,
+- 200: OK
+- 300: Moved Permanently
+- 404: Not Found
+- 500: Internal Server Error
+응답에도 바디 가능, HTTP/1.1 200 OK(상태코드)__Content-Typle: application/json____{"name":"A",__"age":null}
+
 
 
