@@ -52,4 +52,19 @@ HTTP응답: 서버측, ***요청:클라이언트,
 응답에도 바디 가능, HTTP/1.1 200 OK(상태코드)__Content-Typle: application/json____{"name":"A",__"age":null}
 
 
+API spec: API 명세, 약속 혹은 규칙, Method/Path/쿼리/반환결과 등
+@RestController: 주어진 클래스를 컨트롤러로 등록, 컨트롤러=API 입구, / 클래스를 API 진입 지점으로 만듦
+@GetMapping("/add"):  아래 함수를 HTTP 메소드가 GET이고, HTTP path가 /add인 API로 지정한다 / HTTP GET 요청을 특정 핸들러 메소드에 맵핑하기 위한 어노테이션, 메소드레벨에서 쓰임  
+***@RequestMapping: 클래스와 메소드레벨 모두 사용 가능
+@RequestParam: 주어진 쿼리를 함수 파라미터에 넣는다, ex: Get /add?number1=10&number2=20 -> pulbic int add TwoNumbers(@RequestParam in number1, @RequestParam int number2) {return number1 + number2;}
+
+
+JSON: JavaScript Object Notation, 자바스크립트 객체 표기법 {"키": "밸류" }, 밸류 안에 JSON 또 쓸 수 ㅅ있음
+@PostMapping: 아래 함수를 POST 메소드로 지정
+@RequestBody: POST API의 경우 HTTP Body의 JSON을 파싱해서 객체로 변환해야하기 떄문에 이를 씀
+한 컨트롤러 클래스에 여러 API를 추가할 수 있따.
+
+
+
+
 
